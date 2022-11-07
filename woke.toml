@@ -1,0 +1,7 @@
+[compiler.solc]
+target_version = "0.8.9"
+additional_paths = ["node_modules/@axelar-network/axelar-gmp-sdk-solidity/contracts/test"]
+
+[compiler.solc.optimizer]
+enabled = true
+runs = 200
