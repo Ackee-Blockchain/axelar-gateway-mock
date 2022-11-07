@@ -10,13 +10,13 @@ from woke.testing.contract import Contract, TransactionObject, Address, Wei
 from woke.testing.abi_to_type import RequestType
 from enum import IntEnum
 
-from pytypes.openzeppelin.contracts.token.ERC721.extensions.IERC721Metadata import IERC721Metadata
+from pytypes.openzeppelin.contracts.token.ERC721.IERC721 import IERC721
 from pytypes.openzeppelin.contracts.utils.introspection.ERC165 import ERC165
 from pytypes.openzeppelin.contracts.utils.Context import Context
-from pytypes.openzeppelin.contracts.token.ERC721.IERC721 import IERC721
+from pytypes.openzeppelin.contracts.token.ERC721.extensions.IERC721Metadata import IERC721Metadata
 
-from woke.testing.primitive_types import uint256
 from woke.testing.primitive_types import bytes4
+from woke.testing.primitive_types import uint256
 
 
 class ERC721(IERC721Metadata, IERC721, ERC165, Context):

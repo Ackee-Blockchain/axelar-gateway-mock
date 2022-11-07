@@ -39,12 +39,6 @@ contract AxelarGatewayMock is IAxelarGatewayMock {
     mapping(string => IAxelarGatewayMock) otherChains;
     mapping(string => IERC20MintableBurnable) tokens;
 
-    enum MessageType {
-        SEND_TOKEN,
-        CALL_CONTRACT,
-        CALL_CONTRACT_WITH_TOKEN
-    }
-
     constructor(string memory chain) {
         chainId = chain;
     }

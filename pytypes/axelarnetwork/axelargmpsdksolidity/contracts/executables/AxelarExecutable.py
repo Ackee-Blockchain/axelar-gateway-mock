@@ -10,11 +10,11 @@ from woke.testing.contract import Contract, TransactionObject, Address, Wei
 from woke.testing.abi_to_type import RequestType
 from enum import IntEnum
 
-from pytypes.axelarnetwork.axelargmpsdksolidity.contracts.interfaces.IAxelarGateway import IAxelarGateway
 from pytypes.axelarnetwork.axelargmpsdksolidity.contracts.interfaces.IAxelarExecutable import IAxelarExecutable
+from pytypes.axelarnetwork.axelargmpsdksolidity.contracts.interfaces.IAxelarGateway import IAxelarGateway
 
-from woke.testing.primitive_types import bytes32
 from woke.testing.primitive_types import uint256
+from woke.testing.primitive_types import bytes32
 
 
 class AxelarExecutable(IAxelarExecutable):
