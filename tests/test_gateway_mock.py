@@ -1,8 +1,9 @@
 from pytypes.contracts.mocks.AxelarGatewayMock import AxelarGatewayMock
 from pytypes.contracts.ExampleContract import ExampleContract
-from pytypes.node_modules.axelarnetwork.axelargmpsdksolidity.contracts.test.ERC20MintableBurnable import ERC20MintableBurnable
+from pytypes.axelarnetwork.axelargmpsdksolidity.contracts.test.ERC20MintableBurnable import ERC20MintableBurnable
 
 from woke.testing.contract import dev_interface, Address, Wei
+
 
 def test_send_token():
     dev_interface.connect(8545)

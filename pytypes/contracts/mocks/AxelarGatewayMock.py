@@ -7,13 +7,13 @@ from typing_extensions import Literal
 
 from woke.testing.contract import Contract, TransactionObject, Address, Wei
 
-from woke.testing.abi_to_type import RequestType
 from enum import IntEnum
+from woke.testing.abi_to_type import RequestType
 
-from pytypes.node_modules.axelarnetwork.axelargmpsdksolidity.contracts.interfaces.IERC20MintableBurnable import IERC20MintableBurnable
+from pytypes.axelarnetwork.axelargmpsdksolidity.contracts.interfaces.IERC20MintableBurnable import IERC20MintableBurnable
 
-from woke.testing.primitive_types import uint256
 from woke.testing.primitive_types import bytes32
+from woke.testing.primitive_types import uint256
 
 
 class IAxelarGatewayMock(Contract):
