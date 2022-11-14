@@ -5,10 +5,10 @@ from dataclasses import dataclass
 from typing import List, NewType, Optional, overload, Union
 from typing_extensions import Literal
 
-from woke.testing.contract import Contract, TransactionObject, Address, Wei
+from woke.testing.contract import Contract, Library, TransactionObject, Address, Wei
 
-from enum import IntEnum
 from woke.testing.abi_to_type import RequestType
+from enum import IntEnum
 
 from pytypes.axelarnetwork.axelargmpsdksolidity.contracts.interfaces.IAxelarGateway import IAxelarGateway
 
@@ -18,7 +18,7 @@ from woke.testing.primitive_types import uint256
 
 class IAxelarExecutable(Contract):
     _abi = {b'\xe6\xc4${': {'inputs': [], 'name': 'InvalidAddress', 'type': 'error'}, b'P\x0cD\xb4': {'inputs': [], 'name': 'NotApprovedByGateway', 'type': 'error'}, b'I\x16\x06X': {'inputs': [{'internalType': 'bytes32', 'name': 'commandId', 'type': 'bytes32'}, {'internalType': 'string', 'name': 'sourceChain', 'type': 'string'}, {'internalType': 'string', 'name': 'sourceAddress', 'type': 'string'}, {'internalType': 'bytes', 'name': 'payload', 'type': 'bytes'}], 'name': 'execute', 'outputs': [], 'stateMutability': 'nonpayable', 'type': 'function'}, b'\x1a\x98\xb2\xe0': {'inputs': [{'internalType': 'bytes32', 'name': 'commandId', 'type': 'bytes32'}, {'internalType': 'string', 'name': 'sourceChain', 'type': 'string'}, {'internalType': 'string', 'name': 'sourceAddress', 'type': 'string'}, {'internalType': 'bytes', 'name': 'payload', 'type': 'bytes'}, {'internalType': 'string', 'name': 'tokenSymbol', 'type': 'string'}, {'internalType': 'uint256', 'name': 'amount', 'type': 'uint256'}], 'name': 'executeWithToken', 'outputs': [], 'stateMutability': 'nonpayable', 'type': 'function'}, b'\x11a\x91\xb6': {'inputs': [], 'name': 'gateway', 'outputs': [{'internalType': 'contract IAxelarGateway', 'name': '', 'type': 'address'}], 'stateMutability': 'view', 'type': 'function'}}
-    _bytecode = b''
+    _bytecode = ""
 
     @classmethod
     def deploy(cls, *, from_: Optional[Union[Address, str]] = None, value: Wei = 0, gas_limit: Union[int, Literal["max"], Literal["auto"]] = "max") -> IAxelarExecutable:
