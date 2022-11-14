@@ -1,15 +1,12 @@
-from woke.testing.utils import snapshot_and_revert
-
 from pytypes.contracts.mocks.AxelarGatewayMock import AxelarGatewayMock
 from pytypes.contracts.ExampleContract import ExampleContract
 from pytypes.axelarnetwork.axelargmpsdksolidity.contracts.test.ERC20MintableBurnable import ERC20MintableBurnable
 
 from woke.testing.contract import dev_interface, Address, Wei
+from woke.testing.utils import connect, snapshot_and_revert
 
 
-dev_interface.connect(8545)
-
-
+@connect(dev_interface, "http://127.0.0.1:8545")
 @snapshot_and_revert(dev_interface)
 def test_send_token():
     # deploy gateways
@@ -56,6 +53,7 @@ def test_send_token():
     assert token2.balanceOf(user2) == 100
 
 
+@connect(dev_interface, "http://127.0.0.1:8545")
 @snapshot_and_revert(dev_interface)
 def test_call_contract():
     # deploy gateways
@@ -88,6 +86,7 @@ def test_call_contract():
     )
 
 
+@connect(dev_interface, "http://127.0.0.1:8545")
 @snapshot_and_revert(dev_interface)
 def test_call_contract_with_token():
     # deploy gateways
