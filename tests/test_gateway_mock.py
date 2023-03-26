@@ -2,13 +2,13 @@ from pytypes.contracts.mocks.AxelarGatewayMock import AxelarGatewayMock
 from pytypes.contracts.ExampleContract import ExampleContract
 from pytypes.axelarnetwork.axelargmpsdksolidity.contracts.test.ERC20MintableBurnable import ERC20MintableBurnable
 
-from woke.testing.contract import dev_interface, Address, Wei
-from woke.testing.utils import connect, snapshot_and_revert
+from woke.testing import *
 
 
-@connect(dev_interface, "http://127.0.0.1:8545")
-@snapshot_and_revert(dev_interface)
+@default_chain.connect()
 def test_send_token():
+    default_chain.set_default_accounts(default_chain.accounts[0])
+
     # deploy gateways
     # gateway1 should emulate AxelarGateway on chain1
     # gateway2 should emulate AxelarGateway on chain2
@@ -30,11 +30,11 @@ def test_send_token():
     gateway2.registerToken("TKN", token2)
 
     # user1 wants to send 100 TKN from chain1 to user2 on chain2
-    user1 = Address("0x4516d3f5b2e5b6e1f062f18e3d2f5f6a77469285")
+    user1 = Account("0x4516d3f5b2e5b6e1f062f18e3d2f5f6a77469285")
     # give user1 some Ether so that he can pay for gas
     user1.balance = Wei.from_ether(100)
     assert user1.balance == Wei.from_ether(100)
-    user2 = Address("0x781d3f5b2e5b6e1f062f18e3d2f5f6a774692851")
+    user2 = Account("0x781d3f5b2e5b6e1f062f18e3d2f5f6a774692851")
 
     # give user1 200 TKN (on chain1)
     token1.mint(user1, 200)
@@ -53,9 +53,10 @@ def test_send_token():
     assert token2.balanceOf(user2) == 100
 
 
-@connect(dev_interface, "http://127.0.0.1:8545")
-@snapshot_and_revert(dev_interface)
+@default_chain.connect()
 def test_call_contract():
+    default_chain.set_default_accounts(default_chain.accounts[0])
+
     # deploy gateways
     # gateway1 should emulate AxelarGateway on chain1
     # gateway2 should emulate AxelarGateway on chain2
@@ -69,26 +70,27 @@ def test_call_contract():
     # contract1 wants to send a message from chain1 to contract2 on chain2
     contract1 = ExampleContract.deploy(gateway1)
     # give contract1 some Ether so that it can pay for gas
-    Address(contract1).balance = Wei.from_ether(100)
-    assert Address(contract1).balance == Wei.from_ether(100)
+    contract1.balance = Wei.from_ether(100)
+    assert contract1.balance == Wei.from_ether(100)
     contract2 = ExampleContract.deploy(gateway2)
 
     # make the actual call
-    contract1.send("chain2", str(Address(contract2)), b"testing message")
+    contract1.send("chain2", str(contract2.address), b"testing message")
 
     # check that the message was received
     assert contract2.lastMessage() == ExampleContract.Message(
         "chain1",
-        str(Address(contract1)).lower(),
-        b"testing message",
+        str(contract1.address).lower(),
+        bytearray(b"testing message"),
         "",
         0
     )
 
 
-@connect(dev_interface, "http://127.0.0.1:8545")
-@snapshot_and_revert(dev_interface)
+@default_chain.connect()
 def test_call_contract_with_token():
+    default_chain.set_default_accounts(default_chain.accounts[0])
+
     # deploy gateways
     # gateway1 should emulate AxelarGateway on chain1
     # gateway2 should emulate AxelarGateway on chain2
@@ -112,8 +114,8 @@ def test_call_contract_with_token():
     # contract1 wants to send a message and 100 TKN from chain1 to contract2 on chain2
     contract1 = ExampleContract.deploy(gateway1)
     # give contract1 some Ether so that it can pay for gas
-    Address(contract1).balance = Wei.from_ether(100)
-    assert Address(contract1).balance == Wei.from_ether(100)
+    contract1.balance = Wei.from_ether(100)
+    assert contract1.balance == Wei.from_ether(100)
     contract2 = ExampleContract.deploy(gateway2)
 
     # give contract1 200 TKN (on chain1)
@@ -125,13 +127,13 @@ def test_call_contract_with_token():
     assert token2.balanceOf(contract2) == 0
 
     # make the actual call and send 100 TKN
-    contract1.sendWithToken("chain2", str(Address(contract2)), b"testing message", token1, "TKN", 100)
+    contract1.sendWithToken("chain2", str(contract2.address), b"testing message", token1, "TKN", 100)
 
     # check that the message and tokens were received
     assert contract2.lastMessage() == ExampleContract.Message(
         "chain1",
-        str(Address(contract1)).lower(),
-        b"testing message",
+        str(contract1.address).lower(),
+        bytearray(b"testing message"),
         "TKN",
         100
     )
