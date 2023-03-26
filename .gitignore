@@ -3,3 +3,11 @@
 .woke-build
 node_modules
 __pycache__
+
+.woke-logs
+.env
+pytypes
+__pycache__/
+*.py[cod]
+.hypothesis/
+woke-coverage.cov
